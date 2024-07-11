@@ -3,9 +3,13 @@ package de.hrw.swep.votingservice.persistence;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,13 +32,18 @@ public class DataStoreWriteInterfaceTest {
     private static final String DB_PASSWORD = "";
 
     private RealDatabase db;
+    IDatabaseTester databaseTester;
 
     /**
      * @throws java.lang.Exception
      */
     @BeforeEach
     public void setUp() throws Exception {
-        db = new RealDatabase();
+       databaseTester = new JdbcDatabaseTester("org.hsqldb.jdbcDriver", CONNECTION_STRING, DB_USER, DB_PASSWORD);
+       IDataSet dataSet = newFlatXmlDataSet(new FileInputStream(FILE_NAME_FULL_XML));
+       databaseTester.setDataSet(dataSet);
+       databaseTester.onSetup();
+       db = new RealDatabase();
     }
 
     @Test
@@ -62,6 +71,8 @@ public class DataStoreWriteInterfaceTest {
         try {
             db.addVote(1, 7);
         } catch (PersistenceException e) {
+            IDataSet actualDataSet = databaseTester.getConnection().createDataSet();
+            Assertion.assertEquals(new FlatXmlDataSetBuilder()).build(new File(FILE_NAME_FULL_XML), actualDataSet);
         }
     }
 
