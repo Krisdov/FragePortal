@@ -12,32 +12,28 @@ public class QuestionClosed implements QuestionStatusInterface {
     private Question question;
 
     public QuestionClosed(Question question) {
-        // TODO Auto-generated method stub
-        
+        // implementiert in anderem Zweig
     }
 
     @Override
     public void vote(int result) {
-        // TODO Auto-generated method stub
-        
+        // implementiert in anderem Zweig
     }
 
     @Override
     public boolean isOpenForVoting() {
-        // TODO Auto-generated method stub
+        // implementiert in anderem Zweig
         return false;
     }
 
     @Override
     public void openForVoting() {
-        // TODO Auto-generated method stub
-        
+        // implementiert in anderem Zweig
     }
 
     @Override
     public void closeForVoting() {
-        // TODO Auto-generated method stub
-        
+        // implementiert in anderem Zweig
     }
 
 }
