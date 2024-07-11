@@ -10,30 +10,30 @@ package de.hrw.swep.votingservice.service;
  */
 public class QuestionClosed implements QuestionStatusInterface {
     private Question question;
-    private String ALLREADY_CLOSED = "Questions has already been closed.";
 
     public QuestionClosed(Question question) {
-        question = this.question;
+        // implementiert in anderem Zweig
     }
 
     @Override
     public void vote(int result) {
-        throw new IllegalStateException(ALLREADY_CLOSED);
+        // implementiert in anderem Zweig
     }
 
     @Override
     public boolean isOpenForVoting() {
+        // implementiert in anderem Zweig
         return false;
     }
 
     @Override
     public void openForVoting() {
-        question.setCurrentState(new QuestionOpen(question));
+        // implementiert in anderem Zweig
     }
 
     @Override
     public void closeForVoting() {
-        throw new IllegalStateException(ALLREADY_CLOSED);
+        // implementiert in anderem Zweig
     }
 
 }
