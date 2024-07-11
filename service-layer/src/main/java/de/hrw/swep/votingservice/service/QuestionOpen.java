@@ -7,34 +7,29 @@ package de.hrw.swep.votingservice.service;
  */
 public class QuestionOpen implements QuestionStatusInterface {
     private Question question;
+    private final String ALLREADY_OPENED = "Questions has already been opened.";
 
     public QuestionOpen(Question question) {
-        // TODO Auto-generated method stub
-        
+        question = this.question;
     }
 
     @Override
     public void vote(int result) {
-        // TODO Auto-generated method stub
-        
+        question.votes.add(result);
     }
 
     @Override
     public boolean isOpenForVoting() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
     public void openForVoting() {
-        // TODO Auto-generated method stub
-        
+        throw new IllegalStateException(ALLREADY_OPENED);
     }
 
     @Override
     public void closeForVoting() {
-        // TODO Auto-generated method stub
-        
+        question.setCurrentState(new QuestionClosed(question));
     }
-
 }

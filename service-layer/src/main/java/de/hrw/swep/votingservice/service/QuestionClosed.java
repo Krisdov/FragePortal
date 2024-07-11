@@ -10,34 +10,30 @@ package de.hrw.swep.votingservice.service;
  */
 public class QuestionClosed implements QuestionStatusInterface {
     private Question question;
+    private String ALLREADY_CLOSED = "Questions has already been closed.";
 
     public QuestionClosed(Question question) {
-        // TODO Auto-generated method stub
-        
+        question = this.question;
     }
 
     @Override
     public void vote(int result) {
-        // TODO Auto-generated method stub
-        
+        throw new IllegalStateException(ALLREADY_CLOSED);
     }
 
     @Override
     public boolean isOpenForVoting() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public void openForVoting() {
-        // TODO Auto-generated method stub
-        
+        question.setCurrentState(new QuestionOpen(question));
     }
 
     @Override
     public void closeForVoting() {
-        // TODO Auto-generated method stub
-        
+        throw new IllegalStateException(ALLREADY_CLOSED);
     }
 
 }
