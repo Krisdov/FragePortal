@@ -2,6 +2,7 @@ package de.hrw.swep.votingservice.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import de.hrw.swep.votingservice.persistence.DataStoreReadInterface;
 import de.hrw.swep.votingservice.persistence.DataStoreWriteInterface;
+import org.mockito.Mockito;
 
 public class VotingServiceImplMockTest {
     private static final String STR_TEXT_OF_QUESTION_3 = "Wie finden Sie Games of Thrones?";
@@ -22,10 +24,20 @@ public class VotingServiceImplMockTest {
 
     @BeforeEach
     public void setUp() throws Exception {
+        dbReadMock = Mockito.mock(DataStoreReadInterface.class);
+        dbWriteMock = Mockito.mock(DataStoreWriteInterface.class);
+        votingService = new VotingServiceImpl(dbReadMock, dbWriteMock);
+
         List<Integer> allQuestionsIds = new ArrayList<Integer>();
         allQuestionsIds.add(1);
         allQuestionsIds.add(2);
         allQuestionsIds.add(3);
+        List<Question> questionList= new ArrayList<>();
+        questionList.add(new Question(1, "Mögen Sie Schokoeis?", true, votes));
+        questionList.add(new Question(2, "Wie finden Sie Sommerwetter mit blauem Himmel und 37 Grad?", true, votes));
+        questionList.add(new Question(3, STR_TEXT_OF_QUESTION_3, true, votes));
+
+        when(votingService.getAllQuestions()).thenReturn(questionList);
     }
 
     @Test
