@@ -10,11 +10,13 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 
+import org.hsqldb.Database;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import de.hrw.swep.votingservice.dbloader.InitialLoad;
+import de.hrw.swep.votingservice.persistance.RealDatabase;
 
 /**
  * TODO A9a): Die Testklasse soll VotingServiceImpl als Integrationstest testen, es fehlt aber ein
@@ -30,6 +32,8 @@ public class VotingServiceImplIntegrationTest {
     private static final String STR_NEW_QUESTION = "new question";
 
     VotingServiceInterface votingService;
+    DataStoreReadInterface dsri;
+    DataStoreWriteInterface dswi;
 
     private final boolean[] questionsStates = { false, false, false, true, true };
     private final double[] questionsTotalResults = { 2.33333325, 4.66666650, 4.66666650, 3.33333325,
@@ -46,6 +50,9 @@ public class VotingServiceImplIntegrationTest {
      */
     @BeforeEach
     public void setUp() throws Exception {
+        dsri = new DataStoreReadInterface();
+        dswi = new DataStoreWriteInterface();
+        votingService = new VotingServiceImpl(dsri, dswi);
         InitialLoad.main(null);
     }
 
